@@ -1,71 +1,74 @@
 ﻿using UnityEngine;
-using System.Collections;
+using UnityEngine.UI;
+
+using System.Linq;
 
 namespace UnityChan
 {
 	public class FaceUpdate : MonoBehaviour
 	{
+		[SerializeField]
+		GameObject TogglePrefab	= null;
+
 		public AnimationClip[] animations;
 		Animator anim;
 		public float delayWeight;
 		public bool isKeepFace = false;
 
+		ToggleGroup toggles;
 		void Start ()
 		{
-			anim = GetComponent<Animator> ();
-		}
+			anim	= gameObject.GetComponent<Animator>();
 
-		void OnGUI ()
-		{
-			GUILayout.Box ("Face Update", GUILayout.Width (170), GUILayout.Height (25 * (animations.Length + 2)));
-			Rect screenRect = new Rect (10, 25, 150, 25 * (animations.Length + 1));
-			GUILayout.BeginArea (screenRect);
-			foreach (var animation in animations) {
-				if (GUILayout.RepeatButton (animation.name)) {
-					anim.CrossFade (animation.name, 0);
-				}
+			toggles	= GameObject.FindObjectsOfType<ToggleGroup>().FirstOrDefault((obj) => obj.name == "FaceSelector");
+			toggles.allowSwitchOff	= false;
+
+			foreach(var animation in animations)
+			{
+				var toggle	= GameObject.Instantiate(TogglePrefab).GetComponent<Toggle>();
+				toggle.transform.SetParent(toggles.transform,false);
+				toggle.group	= toggles;
+
+				toggle.isOn	= animation.name == lastSelected;
+				toggle.GetComponentInChildren<Text>().text	= animation.name;
+				toggle.onValueChanged.AddListener((b) => {
+					lastSelected	= toggle.GetComponentInChildren<Text>().text;
+					anim.CrossFade(lastSelected,0.1f);
+				});
 			}
-			isKeepFace = GUILayout.Toggle (isKeepFace, " Keep Face");
-			GUILayout.EndArea ();
+
+			var keep	= GameObject.Instantiate(TogglePrefab).GetComponent<Toggle>();
+			keep.transform.SetParent(toggles.transform,false);
+			keep.GetComponentInChildren<Text>().text	= " Keep Face";
+			keep.isOn	= isKeepFace;
+			keep.onValueChanged.AddListener((b) => isKeepFace = b);
+
+			toggles.gameObject.GetComponent<ContentSizeFitter>().SetLayoutHorizontal();
+			toggles.gameObject.GetComponent<ContentSizeFitter>().SetLayoutVertical();
 		}
 
 		float current = 0;
-
+		string lastSelected	= "default@sd_generic";
 		void Update ()
 		{
-
-			if (Input.GetMouseButton (0)) {
+			if(Input.GetMouseButton(0))
 				current = 1;
-			} else if (!isKeepFace) {
-				current = Mathf.Lerp (current, 0, delayWeight);
-			}
-			anim.SetLayerWeight (1, current);
+			else if(!isKeepFace)
+				current = Mathf.Lerp(current,0,delayWeight);
+
+			anim.SetLayerWeight(1,current);
 		}
 	 
 
 		//アニメーションEvents側につける表情切り替え用イベントコール
-		public void OnCallChangeFace (string str)
-		{   
-			int ichecked = 0;
-			foreach (var animation in animations) {
-				if (str == animation.name) {
-					ChangeFace (str);
-					break;
-				} else if (ichecked <= animations.Length) {
-					ichecked++;
-				} else {
-					//str指定が間違っている時にはデフォルトで
-					str = "default@unitychan";
-					ChangeFace (str);
-				}
-			} 
-		}
-
-		void ChangeFace (string str)
+		public void OnCallChangeFace(string str)
 		{
-			isKeepFace = true;
-			current = 1;
-			anim.CrossFade (str, 0);
+			isKeepFace	= true;
+			current	= 1;
+
+			var exist	= animations.FirstOrDefault((animation) => animation.name == str);
+
+			anim.CrossFade(exist != null ? str : lastSelected,0.1f,1);
 		}
 	}
 }

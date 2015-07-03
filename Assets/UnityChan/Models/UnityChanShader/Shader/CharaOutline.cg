@@ -23,7 +23,7 @@ struct v2f
 #define float4_t half4
 
 // Outline thickness multiplier
-#define INV_EDGE_THICKNESS_DIVISOR 0.00285
+#define INV_EDGE_THICKNESS_DIVISOR 0.0057
 // Outline color parameters
 #define SATURATION_FACTOR 0.6
 #define BRIGHTNESS_FACTOR 0.8
@@ -36,7 +36,7 @@ v2f vert( appdata_base v )
 
 	half4 projSpacePos = mul( UNITY_MATRIX_MVP, v.vertex );
 	half4 projSpaceNormal = normalize( mul( UNITY_MATRIX_MVP, half4( v.normal, 0 ) ) );
-	half4 scaledNormal = _EdgeThickness * INV_EDGE_THICKNESS_DIVISOR * projSpaceNormal; // * projSpacePos.w;
+	half4 scaledNormal = _EdgeThickness * INV_EDGE_THICKNESS_DIVISOR * projSpaceNormal * sqrt(projSpacePos.w);
 
 	scaledNormal.z += 0.00001;
 	o.pos = projSpacePos + scaledNormal;

@@ -17,49 +17,41 @@ namespace UnityChan
 {
 	public class RandomWind : MonoBehaviour
 	{
-		private SpringBone[] springBones;
 		public bool isWindActive = false;
 
-		private bool isMinus = false;				//風方向反転用.
 		public float threshold = 0.5f;				// ランダム判定の閾値.
 		public float interval = 5.0f;				// ランダム判定のインターバル.
-		public float windPower = 1.0f;				//風の強さ.
+		public float windPower = 10;				//風の強さ.
 		public float gravity = 0.98f;				//重力の強さ.
 
-
-		// Use this for initialization
 		void Start ()
 		{
-			springBones = GetComponent<SpringManager> ().springBones;
 			StartCoroutine ("RandomChange");
 		}
 
-
-
-
-
-		// Update is called once per frame
+		Vector3 direction	= new Vector3(0,1,0);
 		void Update ()
 		{
-
-			Vector3 force = Vector3.zero;
-			if (isWindActive) {
-				if(isMinus){
-					force = new Vector3 (Mathf.PerlinNoise (Time.time, 0.0f) * windPower * -0.001f , gravity * -0.001f , 0);
-				}else{
-					force = new Vector3 (Mathf.PerlinNoise (Time.time, 0.0f) * windPower * 0.001f, gravity * -0.001f, 0);
-				}
-
-				for (int i = 0; i < springBones.Length; i++) {
-					springBones [i].springForce = force;
-				}
-			
+			var force = 0.001f * direction;
+			if(isWindActive)
+			{
+				float str	= windPower * Mathf.PerlinNoise(Time.time,0.0f);
+				force.x	*= str;
+				force.z	*= str;
 			}
-		}
+			else
+			{
+				force.x	= 0;
+				force.z	= 0;
+			}
 
+			foreach(var spring in gameObject.GetComponent<SpringManager>().springBones)
+				spring.springForce	= force;
+		}
+		
 		void OnGUI ()
 		{
-			Rect rect1 = new Rect (10, Screen.height - 40, 400, 30);
+			Rect rect1 = new Rect (Screen.width * 0.5f, Screen.height - 40, 400, 30);
 			isWindActive = GUI.Toggle (rect1, isWindActive, "Random Wind");
 		}
 
@@ -69,14 +61,12 @@ namespace UnityChan
 			// 無限ループ開始.
 			while (true) {
 				//ランダム判定用シード発生.
-				float _seed = Random.Range (0.0f, 1.0f);
+				direction.x	= Random.Range(0.0f,1.0f);
+				direction.z	= 1 - direction.x;
 
-				if (_seed > threshold) {
-					//_seedがthreshold以上の時、符号を反転する.
-					isMinus = true;
-				}else{
-					isMinus = false;
-				}
+				direction.x	*= Random.Range(0.0f,1.0f) > 0.5f ? -1 : 1;
+				direction.z	*= Random.Range(0.0f,1.0f) > 0.5f ? -1 : 1;
+				direction.y	= -gravity;
 
 				// 次の判定までインターバルを置く.
 				yield return new WaitForSeconds (interval);

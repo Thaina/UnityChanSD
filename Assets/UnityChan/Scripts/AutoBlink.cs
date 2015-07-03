@@ -42,8 +42,8 @@ namespace UnityChan
 
 		void Awake ()
 		{
-			//ref_SMR_EYE_DEF = GameObject.Find("EYE_DEF").GetComponent<SkinnedMeshRenderer>();
-			//ref_SMR_EL_DEF = GameObject.Find("EL_DEF").GetComponent<SkinnedMeshRenderer>();
+			//ref_SMR_EYE_DEF = GameObject.Find("EYE_DEF").gameObject.GetComponent<SkinnedMeshRenderer>();
+			//ref_SMR_EL_DEF = GameObject.Find("EL_DEF").gameObject.GetComponent<SkinnedMeshRenderer>();
 		}
 
 

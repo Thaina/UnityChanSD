@@ -50,27 +50,16 @@ namespace UnityChan
 			trs = transform;
 			localRotation = transform.localRotation;
 			//Kobayashi:Reference for "SpringManager" component with unitychan
-			// GameObject.Find("unitychan_dynamic").GetComponent<SpringManager>();
-			managerRef = GetParentSpringManager (transform);
+			// GameObject.Find("unitychan_dynamic").gameObject.GetComponent<SpringManager>();
+
+			managerRef	= gameObject.GetComponent<SpringManager>();
+			if(!managerRef)
+				managerRef = gameObject.GetComponentInParent<SpringManager>();
 		}
 
-		private SpringManager GetParentSpringManager (Transform t)
+		private void Start()
 		{
-			var springManager = t.GetComponent<SpringManager> ();
-
-			if (springManager != null)
-				return springManager;
-
-			if (t.parent != null) {
-				return GetParentSpringManager (t.parent);
-			}
-
-			return null;
-		}
-
-		private void Start ()
-		{
-			springLength = Vector3.Distance (trs.position, child.position);
+			springLength = Vector3.Distance(trs.position,child.position);
 			currTipPos = child.position;
 			prevTipPos = child.position;
 		}

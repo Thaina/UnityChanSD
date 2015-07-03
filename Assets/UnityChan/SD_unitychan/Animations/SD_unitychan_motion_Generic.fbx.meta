@@ -280,10 +280,6 @@ ModelImporter:
     bakeSimulation: 0
     optimizeGameObjects: 0
     motionNodeName: 
-    animationImportErrors: 
-    animationImportWarnings: 
-    animationRetargetingWarnings: 
-    animationDoRetargetingWarnings: 0
     animationCompression: 0
     animationRotationError: .5
     animationPositionError: .5
@@ -593,14 +589,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 0
-        functionName: OnCallChangeFace
-        data: smile@sd_generic
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask:
       - path: 
         weight: 1
@@ -880,14 +869,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 0
-        functionName: OnCallChangeFace
-        data: surprise@sd_generic
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask:
       - path: 
         weight: 1
@@ -1175,6 +1157,13 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: 0
+        functionName: OnCallChangeFace
+        data: default@sd_generic
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       - time: .105732456
         functionName: OnCallChangeFace
         data: surprise@sd_generic
@@ -1203,16 +1192,9 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: .678980827
+      - time: .629268289
         functionName: OnCallChangeFace
-        data: default@sd_generic
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0
-        functionName: OnCallChangeFace
-        data: default@sd_generic
+        data: TT
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
@@ -1514,6 +1496,13 @@ ModelImporter:
       - time: .598726451
         functionName: OnCallChangeFace
         data: sad@sd_generic
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: .751219511
+        functionName: OnCallChangeFace
+        data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
@@ -2099,6 +2088,13 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: .67136848
+        functionName: OnCallChangeFace
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1
@@ -2680,7 +2676,7 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: .899362326
+      - time: .753020883
         functionName: OnCallChangeFace
         data: default@sd_generic
         objectReferenceParameter: {instanceID: 0}
@@ -2977,6 +2973,13 @@ ModelImporter:
       - time: .485349923
         functionName: OnCallChangeFace
         data: smile2@sd_generic
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: .824390233
+        functionName: OnCallChangeFace
+        data: TT
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
@@ -3845,6 +3848,13 @@ ModelImporter:
       - time: .448407501
         functionName: OnCallChangeFace
         data: default@sd_generic
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: .751219451
+        functionName: OnCallChangeFace
+        data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0

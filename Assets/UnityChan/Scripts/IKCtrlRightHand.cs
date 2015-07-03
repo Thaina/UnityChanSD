@@ -21,7 +21,7 @@ namespace UnityChan
 
 		void Awake ()
 		{
-			anim = GetComponent<Animator> ();
+			anim = gameObject.GetComponent<Animator> ();
 		}
 
 		void Update ()
