@@ -20,22 +20,10 @@ using System.Collections.Generic;
 
 namespace UnityChan
 {
-	[System.Serializable]
-	public class StringCurvePair
-	{
-		public string Key;
-		public Keyframe[] Value;
-		public StringCurvePair(string key,Keyframe[] value)
-		{
-			Key	= key;
-			Value	= value;
-		}
-	}
-
 	public class CameraController : MonoBehaviour
 	{
 		[SerializeField]
-		SpriteRenderer cursor;
+		SpriteRenderer cursor	= null;
 
 		void Start()
 		{

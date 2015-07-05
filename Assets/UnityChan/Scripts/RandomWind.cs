@@ -19,14 +19,13 @@ namespace UnityChan
 	{
 		public bool isWindActive = false;
 
-		public float threshold = 0.5f;				// ランダム判定の閾値.
 		public float interval = 5.0f;				// ランダム判定のインターバル.
 		public float windPower = 10;				//風の強さ.
 		public float gravity = 0.98f;				//重力の強さ.
 
 		void Start ()
 		{
-			StartCoroutine ("RandomChange");
+			StartCoroutine(RandomChange);
 		}
 
 		Vector3 direction	= new Vector3(0,1,0);
@@ -51,28 +50,29 @@ namespace UnityChan
 		
 		void OnGUI ()
 		{
-			Rect rect1 = new Rect (Screen.width * 0.5f, Screen.height - 40, 400, 30);
+			var rect1	= new Rect (Screen.width * 0.5f, Screen.height - 40, 400, 30);
 			isWindActive = GUI.Toggle (rect1, isWindActive, "Random Wind");
 		}
 
 		// ランダム判定用関数.
-		IEnumerator RandomChange ()
+		IEnumerator RandomChange
 		{
-			// 無限ループ開始.
-			while (true) {
-				//ランダム判定用シード発生.
-				direction.x	= Random.Range(0.0f,1.0f);
-				direction.z	= 1 - direction.x;
+			get
+			{
+				while(true)
+				{
+					//ランダム判定用シード発生.
+					direction.x	= Random.Range(0.0f,1.0f);
+					direction.z	= 1 - direction.x;
 
-				direction.x	*= Random.Range(0.0f,1.0f) > 0.5f ? -1 : 1;
-				direction.z	*= Random.Range(0.0f,1.0f) > 0.5f ? -1 : 1;
-				direction.y	= -gravity;
+					direction.x	*= Random.Range(0.0f,1.0f) > 0.5f ? -1 : 1;
+					direction.z	*= Random.Range(0.0f,1.0f) > 0.5f ? -1 : 1;
+					direction.y	= -gravity;
 
-				// 次の判定までインターバルを置く.
-				yield return new WaitForSeconds (interval);
+					// 次の判定までインターバルを置く.
+					yield return new WaitForSeconds(interval);
+				}
 			}
 		}
-
-
 	}
 }
